@@ -14,12 +14,13 @@ public class InputProcessor implements Runnable {
 	private final String DEFAULT_INPUT_PATH = "./data/input.txt";
 	private String inputPath;
 	private Queue<Command> commands;
+	private boolean isReading = false;
 	
 	//public ArrayList<String> rawIn = new ArrayList<String>();
 
 	private BufferedReader inputDataStream;
 	public String strIn;
-
+	
 	public InputProcessor(Queue<Command> val, String file) {
 		this.inputPath = file != null ? file : DEFAULT_INPUT_PATH;
 		this.commands =  val;
@@ -39,26 +40,38 @@ public class InputProcessor implements Runnable {
 	@Override
 	public void run() {
 		
+		this.isReading = true;
+		
 		System.out.println("target file path: " + inputPath);
 		try {
 			inputDataStream = new BufferedReader(new FileReader(inputPath));
 		} catch (FileNotFoundException e) {
 			System.out.println(this.getClass() + " Input file not found!");
 			Thread.currentThread().interrupt();
+			this.isReading = false;
 			e.printStackTrace();
 		}
 		
         String line;
         try {
 			while ((line = inputDataStream.readLine()) != null) {
-				this.commands.add(CommandProcessor.createCommand(line));		
+				synchronized(commands) {
+					this.commands.add(CommandProcessor.createCommand(line));	
+				}
 			}
+			inputDataStream.close();
 		} catch (IOException e) {
 			System.out.println(this.getClass() + " IO error");
+			this.isReading = false;
 			e.printStackTrace();
 		}
 		
         System.out.println(this.getClass() + " Input finished.");
+        this.isReading = false;
+	}
+
+	public boolean isReading() {
+		return this.isReading;
 	}
 
 }

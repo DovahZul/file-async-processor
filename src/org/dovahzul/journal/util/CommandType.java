@@ -18,8 +18,8 @@ public enum CommandType {
 	UNDEFINED,
 	UPDATE_BID, //request for buying by client
 	UPDATE_ASK, //request for selling by supplier
-	SHOW_BEST_BID, //display current state
-	SHOW_BEST_ASK, //display current state
+	SHOW_BEST_BID, //effectively the highest price that an investor is willing to pay for an asset
+	SHOW_BEST_ASK, //is the lowest quoted offer price by seller
 	SHOW_SIZE_BY_PRICE, // spread, display current size of stock by giving price
 	BUY,
 	SELL,
