@@ -7,7 +7,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Queue;
 
-public class OutputProcessor implements Runnable {
+/**
+ * 
+ * @author dovahzul
+ *
+ */
+public class OutputProcessor extends Thread {
 
 	private final String DELIMITER = System.getProperty("line.separator"); //"\n";
 	private final String DEFAULT_OUPUT_FILE = "./data/output.txt";
@@ -17,6 +22,7 @@ public class OutputProcessor implements Runnable {
 	
 	//public ArrayList<String> rawOut = new ArrayList<String>();
 	private Queue<String> rawLogs;
+	private boolean released = true;
 	
 	
 	public OutputProcessor(Queue<String> rawLogs, String filePath) {
@@ -28,23 +34,37 @@ public class OutputProcessor implements Runnable {
 		this.outputPath = DEFAULT_OUPUT_FILE;
 		this.rawLogs = rawLogs;
 	}
+	
+	public boolean isReleased() {
+		return this.released;
+	}
+	/**
+	 * Callback to finalize logging & stop.
+	 */
+	public void setReleased() {
+		this.released = true;
+		System.out.println(this.getClass() + " I am free! ^_^");
+	}
+	
 	@Override
 	public void run() {
+		this.released = false;
 		
 		File file = new File(DEFAULT_OUPUT_FILE);
 		try {
+			
 			outputDataStream = new BufferedWriter(new FileWriter(file));
 		} catch (IOException e) {
 			System.out.println(this.getClass() + " IO error");
 			Thread.currentThread().interrupt();
 			e.printStackTrace();
 		}
-		
 		String line;
 		synchronized(rawLogs) {	
 			try {
-				while((line = rawLogs.poll()) != null /*&& need something else..*/ ) {
-		
+				while( (line = rawLogs.poll()) != null || !this.isReleased()) {
+
+						if(line == null) continue;
 						outputDataStream.append(line + DELIMITER);	
 						System.out.println(line);
 					}

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Queue;
 
-public class InputProcessor implements Runnable {
+public class InputProcessor extends Thread {
 
 
 	private final String DEFAULT_INPUT_PATH = "./data/input.txt";
@@ -71,7 +71,7 @@ public class InputProcessor implements Runnable {
 	}
 
 	public boolean isReading() {
-		return this.isReading;
+		return isReading;
 	}
 
 }

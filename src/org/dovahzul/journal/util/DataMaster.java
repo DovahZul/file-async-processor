@@ -6,7 +6,12 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 
-public class DataMaster{
+/**
+ * 
+ * @author dovahzul
+ *
+ */
+public class DataMaster implements Runnable{
 	
 	private static HashMap<Double, Integer> buyStockRequests; // by client
 	private static HashMap<Double, Integer> sellStockRequests; // by seller
@@ -14,30 +19,28 @@ public class DataMaster{
 	private static InputProcessor in;
 	private static OutputProcessor out;
 	
-	public  static  Queue<Command> commands = new LinkedList<Command>();
-	public  static  Queue<String> rawLogs = new LinkedList<String>();
+	public  static Queue<Command> commands = new LinkedList<Command>();
+	public  static Queue<String> rawLogs = new LinkedList<String>();
 	
 	
 	public static void main(String[] args) {
 
-		
-		rawLogs.add("Get some words");
-		rawLogs.add("Get some words");
-		rawLogs.add("Get some words");
-		rawLogs.add("Get some words");
-		rawLogs.add("Get some words");
+
 		
 		buyStockRequests = new HashMap<Double, Integer>(); // by client
 		sellStockRequests = new HashMap<Double, Integer>(); // by seller
+		//inOrigin = new InputProcessor(commands, "./data/commands.txt");
+		//outOrigin = new OutputProcessor(rawLogs);
 		in = new InputProcessor(commands, "./data/commands.txt");
 		out = new OutputProcessor(rawLogs);
-		in.run();
-		out.run();
+		
+		in.start();
+		out.start(); 
+		System.out.println("TEST");
 		
 		while(in.isReading() || !commands.isEmpty()) {
 			
 			executeToConsole(commands.poll(), buyStockRequests, sellStockRequests);
-			
 			}
 		
 		/*
@@ -53,7 +56,16 @@ public class DataMaster{
 			10,2
 			1
 		 */
+		
+		
 		System.out.println("Work is finished!");
+		rawLogs.add("Get some words");
+		rawLogs.add("Get some words");
+		rawLogs.add("Get some words");
+		rawLogs.add("Get some words");
+		rawLogs.add("Get some words");
+		
+		out.setReleased();
 	}
 	
 	public static void printCommand(Command c) {
@@ -109,6 +121,12 @@ public class DataMaster{
 
 		
 		
+		
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
 		
 	}
 

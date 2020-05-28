@@ -1,5 +1,10 @@
 package org.dovahzul.journal.util;
 
+/**
+ * 
+ * @author dovahzul
+ *
+ */
 public class Command {
 	
 	CommandType type;
