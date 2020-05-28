@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Queue;
 
+/**
+ * 
+ * @author dovahzul
+ *
+ */
 public class InputProcessor extends Thread {
 
 

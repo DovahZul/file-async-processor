@@ -84,9 +84,9 @@ public class CommandProcessor {
 		}
 
 		
-		command.type = type;
-		command.price = price;
-		command.size = size;
+		command.setType(type);
+		command.setPrice(price);
+		command.setSize(size);
 		
 		return command;
 	}
