@@ -40,7 +40,9 @@ public class DataMaster implements Runnable{
 		
 		while(in.isReading() || !commands.isEmpty()) {
 			
-			executeToConsole(commands.poll(), buyStockRequests, sellStockRequests);
+			//executeToConsole(commands.poll(), buyStockRequests, sellStockRequests);
+			execute(commands.poll(), buyStockRequests, sellStockRequests);
+			
 			}
 		
 		/*
@@ -75,6 +77,7 @@ public class DataMaster implements Runnable{
 		System.out.println("---------------");
 	}
 	
+	@Deprecated
 	public static void executeToConsole(Command command, HashMap<Double, Integer> buyRequests, HashMap<Double, Integer> sellRequests) {
 
 		if(command == null) return;
@@ -117,11 +120,55 @@ public class DataMaster implements Runnable{
 		default:
 			break;
 		}
-		
+	
+	}
+	
+	
+	public static void execute(Command command, HashMap<Double, Integer> buyRequests, HashMap<Double, Integer> sellRequests) {
 
+		if(command == null) return;
+		System.out.println("new command...");
 		
-		
-		
+		switch(command.type) {
+		case UNDEFINED:
+			System.out.println("UNDEFINED command, something went wrong.");
+			break;
+		case UPDATE_BID:
+			printCommand(command);
+			buyRequests.put(command.price, command.size);
+			break;
+		case UPDATE_ASK:
+			printCommand(command);
+			sellRequests.put(command.price, command.size);
+			break;
+		case SHOW_BEST_BID: // highest price from investor
+			printCommand(command);
+			double highestPrice = Collections.max(buyRequests.entrySet(), Map.Entry.comparingByKey()).getKey();
+			rawLogs.add(highestPrice + "," + buyRequests.get(highestPrice));
+			break;
+		case SHOW_BEST_ASK: // lowest offer price from seller
+			printCommand(command);
+			double lowestPrice = Collections.min(sellRequests.entrySet(), Map.Entry.comparingByKey()).getKey();
+			rawLogs.add(lowestPrice + "," + sellRequests.get(lowestPrice));
+			break;
+		case SHOW_SIZE_BY_PRICE:
+			printCommand(command);
+			rawLogs.add(buyRequests.get(command.price).toString());
+			break;
+		case BUY: // buy count of stuff from sellRequests
+			printCommand(command);
+			double minPrice = Collections.max(sellRequests.entrySet(), Map.Entry.comparingByKey()).getKey();
+			sellRequests.put(minPrice, sellRequests.get(minPrice) - command.size);
+			break;
+		case SELL: // sell count of stuff from buyRequests
+			printCommand(command);
+			double maxPrice = Collections.max(buyRequests.entrySet(), Map.Entry.comparingByKey()).getKey();
+			buyRequests.put(maxPrice, buyRequests.get(maxPrice) - command.size);
+			break;
+		default:
+			break;
+		}
+	
 	}
 
 	@Override
