@@ -16,7 +16,7 @@ import java.util.Queue;
 public class InputProcessor extends Thread {
 
 
-	private final String DEFAULT_INPUT_PATH = "./data/input.txt";
+	private final String DEFAULT_INPUT_PATH = "./data/commands.txt";
 	private String inputPath;
 	private Queue<Command> commands;
 	private boolean isReading = false;
