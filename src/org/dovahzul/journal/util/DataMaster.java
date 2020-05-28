@@ -1,25 +1,52 @@
 package org.dovahzul.journal.util;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class DataMaster{
 	
-	private HashMap<Integer, Double> stock;
+	private HashMap<Double, Integer> buyStockRequests;
+	private HashMap<Double, Integer> sellStockRequests;
+	
 	private static InputProcessor in;
 	private static OutputProcessor out;
 	
-	public void DataMaster() {
-		
-
+	public static Queue<Command> commands = new LinkedList<Command>();
 	
 	
-	}
-
 	public static void main(String[] args) {
+
+		//test queue
+		/*
+		Command c1 = new Command(CommandType.A, 10, 10);
+		Command c2 = new Command(CommandType.B, 20, 20);
+		Command c3 = new Command(CommandType.S, 30, 30);
+		commands.add(c1);
+		commands.add(c2);
+		commands.add(c3);
 		
-		in = new InputProcessor("./data/liveinput.txt");
-		out = new OutputProcessor();
+		commands.poll();
+		for(Command c : commands) {
+			System.out.println(c.type);
+		}
+		System.out.println("++++++++");
+		commands.poll();
+		for(Command c : commands) {
+			System.out.println(c.type);
+		}
+		commands.poll();
+		System.out.println("++++++++");
+		for(Command c : commands) {
+			System.out.println(c.type);
+		}
+		*/
+		
+		in = new InputProcessor(commands);
+		//out = new OutputProcessor();
 		in.run();
+		//out.run();
+		//out.strOut = in.strIn;
 	}
 
 
