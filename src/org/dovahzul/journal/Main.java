@@ -29,7 +29,7 @@ q,size,10
 1
 */
 
-public class Main implements Runnable{
+public class Main {
 	
 	private static HashMap<Double, Integer> buyStockRequests; 
 	private static HashMap<Double, Integer> sellStockRequests; 
@@ -168,12 +168,5 @@ public class Main implements Runnable{
 		}
 	
 	}
-
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		
-	}
-
 
 }
