@@ -20,13 +20,18 @@ public class InputProcessor implements Runnable {
 	private BufferedReader inputDataStream;
 	public String strIn;
 
+	public InputProcessor(Queue<Command> val, String file) {
+		this.inputPath = file != null ? file : DEFAULT_INPUT_PATH;
+		this.commands =  val;
+	}
+	
 	public InputProcessor(Queue<Command> val) {
 		this.inputPath = DEFAULT_INPUT_PATH;
 		this.commands =  val;
 	}
 	
-	public InputProcessor(String filePath) {
-		this.inputPath = filePath != null ? filePath : DEFAULT_INPUT_PATH;
+	public InputProcessor(String file) {
+		this.inputPath = file != null ? file : DEFAULT_INPUT_PATH;
 	}
 	
 
@@ -46,19 +51,10 @@ public class InputProcessor implements Runnable {
         String line;
         try {
 			while ((line = inputDataStream.readLine()) != null) {
-				//rawIn.add(line);
-				strIn = line;
-				while(strIn != "") {
-					System.out.println("Line readed, waiting for empty line.... zzz");
-					Thread.currentThread().wait();
-				}
-				
+				this.commands.add(CommandProcessor.createCommand(line));		
 			}
 		} catch (IOException e) {
 			System.out.println(this.getClass() + " IO error");
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			System.out.println(this.getClass() + " Interrupted!");
 			e.printStackTrace();
 		}
 		

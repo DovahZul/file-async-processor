@@ -42,9 +42,28 @@ public class DataMaster{
 		}
 		*/
 		
-		in = new InputProcessor(commands);
+		in = new InputProcessor(commands, "./data/commands.txt");
 		//out = new OutputProcessor();
 		in.run();
+		
+		/*
+		 * u,9,1,bid
+u,11,5,ask
+q,best_bid
+u,10,2,bid
+q,best_bid
+o,sell,1
+q,size,10
+		 */
+		
+		
+		
+		for(Command c:commands) {
+			System.out.println(c.type);
+			System.out.println(c.price);
+			System.out.println(c.size);
+			System.out.println("---------------");
+		}
 		//out.run();
 		//out.strOut = in.strIn;
 	}

@@ -5,9 +5,9 @@ import org.dovahzul.journal.util.InputProcessor;
 public class Main {
 	public static void main(String[] args) throws InterruptedException {
 		
-        InputProcessor anotherRun = new InputProcessor();
+        //InputProcessor anotherRun = new InputProcessor();
         
-        anotherRun.run();
+       // anotherRun.run();
         
         
         /*

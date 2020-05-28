@@ -15,11 +15,14 @@ package org.dovahzul.journal.util;
  *
  */
 public enum CommandType {
-	UPDATE_BID, //request for selling
-	UPDATE_ASK, //request for buying
-	SPREAD_BEST_BID, //spread, display current state
-	SPREAD_BEST_ASK, //spread, display current state
-	SPREAD_SIZE_BY_PRICE, // spread, display current size of stock by giving price
+	UNDEFINED,
+	UPDATE_BID, //request for buying by client
+	UPDATE_ASK, //request for selling by supplier
+	SHOW_BEST_BID, //display current state
+	SHOW_BEST_ASK, //display current state
+	SHOW_SIZE_BY_PRICE, // spread, display current size of stock by giving price
+	BUY,
+	SELL,
 	
 
 }
