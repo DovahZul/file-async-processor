@@ -36,7 +36,7 @@ public class DataMaster{
 		
 		while(in.isReading() || !commands.isEmpty()) {
 			
-			execute(commands.poll(), buyStockRequests, sellStockRequests);
+			executeToConsole(commands.poll(), buyStockRequests, sellStockRequests);
 			
 			}
 		
@@ -63,8 +63,7 @@ public class DataMaster{
 		System.out.println("---------------");
 	}
 	
-	public static void execute(Command command, HashMap<Double, Integer> buyRequests, HashMap<Double, Integer> sellRequests) {
-		
+	public static void executeToConsole(Command command, HashMap<Double, Integer> buyRequests, HashMap<Double, Integer> sellRequests) {
 
 		if(command == null) return;
 		System.out.println("new command...");
@@ -95,8 +94,8 @@ public class DataMaster{
 			break;
 		case BUY: // buy count of stuff from sellRequests
 			printCommand(command);
-			double miniPrice = Collections.max(sellRequests.entrySet(), Map.Entry.comparingByKey()).getKey();
-			sellRequests.put(miniPrice, sellRequests.get(miniPrice) - command.size);
+			double minPrice = Collections.max(sellRequests.entrySet(), Map.Entry.comparingByKey()).getKey();
+			sellRequests.put(minPrice, sellRequests.get(minPrice) - command.size);
 			break;
 		case SELL: // sell count of stuff from buyRequests
 			printCommand(command);

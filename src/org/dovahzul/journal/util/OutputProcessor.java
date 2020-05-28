@@ -43,7 +43,7 @@ public class OutputProcessor implements Runnable {
 		String line;
 		synchronized(rawLogs) {	
 			try {
-				while((line = rawLogs.poll()) != null) {
+				while((line = rawLogs.poll()) != null /*&& need something else..*/ ) {
 		
 						outputDataStream.append(line + DELIMITER);	
 						System.out.println(line);
