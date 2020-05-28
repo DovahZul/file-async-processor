@@ -15,17 +15,24 @@ public class DataMaster{
 	private static OutputProcessor out;
 	
 	public  static  Queue<Command> commands = new LinkedList<Command>();
+	public  static  Queue<String> rawLogs = new LinkedList<String>();
 	
 	
 	public static void main(String[] args) {
 
 		
+		rawLogs.add("Get some words");
+		rawLogs.add("Get some words");
+		rawLogs.add("Get some words");
+		rawLogs.add("Get some words");
+		rawLogs.add("Get some words");
+		
 		buyStockRequests = new HashMap<Double, Integer>(); // by client
 		sellStockRequests = new HashMap<Double, Integer>(); // by seller
 		in = new InputProcessor(commands, "./data/commands.txt");
-		//out = new OutputProcessor();
+		out = new OutputProcessor(rawLogs);
 		in.run();
-		//out.run();
+		out.run();
 		
 		while(in.isReading() || !commands.isEmpty()) {
 			
@@ -99,6 +106,9 @@ public class DataMaster{
 		default:
 			break;
 		}
+		
+
+		
 		
 		
 	}
