@@ -144,12 +144,12 @@ public class DataMaster implements Runnable{
 		case SHOW_BEST_BID: // highest price from investor
 			printCommand(command);
 			double highestPrice = Collections.max(buyRequests.entrySet(), Map.Entry.comparingByKey()).getKey();
-			rawLogs.add(highestPrice + "," + buyRequests.get(highestPrice));
+			rawLogs.add((int)highestPrice + "," + buyRequests.get(highestPrice));
 			break;
 		case SHOW_BEST_ASK: // lowest offer price from seller
 			printCommand(command);
 			double lowestPrice = Collections.min(sellRequests.entrySet(), Map.Entry.comparingByKey()).getKey();
-			rawLogs.add(lowestPrice + "," + sellRequests.get(lowestPrice));
+			rawLogs.add((int)lowestPrice + "," + sellRequests.get(lowestPrice));
 			break;
 		case SHOW_SIZE_BY_PRICE:
 			printCommand(command);
